@@ -102,10 +102,65 @@ var tl = gsap.timeline()
     .fromTo(dots, 6, { autoAlpha: 0 }, { autoAlpha: 1, ease: Expo.easeOut }, 'flower3+=1')
     .fromTo(dots, 5, { scale: 0, transformOrigin: '50% 50%' }, { scale: 1, ease: Expo.easeOut }, 'flower3');
 
+const defaultData = {
+    title: 'HOLA PERLA',
+    subtitle: 'Da lo mejorde ti, te estare apoyando siempre'
+};
+
 const birthdayData = {
     title: 'FELIZ CUMPLEAÑOS PERLA',
-    subtitle: 'No olvides que eres mi flor más hermosa'
+    subtitle: 'Te deseo lo mejor hoy y siempre. Disfruta mucho tu día.'
 };
+
+const celebrations = [
+    {
+        month: 12,
+        day: 25,
+        title: 'FELIZ NAVIDAD PERLA',
+        subtitle: 'Mi mejor regalo para esta navidad eres tú'
+    },
+    {
+        month: 1,
+        day: 1,
+        title: 'FELIZ AÑO NUEVO PERLA',
+        subtitle: 'Que este nuevo año cumpla todos tus deseos'
+    },
+
+    {
+        month: 5,
+        day: 25,
+        title: 'Feliz Día de la Contadora',
+        subtitle: 'Que nunca te falten razonez para sonreir y que sigas cosechando éxitos.'
+    },
+
+    {
+        month: 5,
+        day: 10,
+        title: 'Feliz Día de la Madre',
+        subtitle: 'Tu amor de madre es único, disfruta este dia con tu pequeño.'
+    },
+    {
+        month: 8,
+        day: 22,
+        title: 'Feliz cumpleaños Julian ',
+        subtitle: 'Que tu pequeño tenga un dia increible.'
+    }
+];
+
+// Cambiar estos valores por la fecha real del cumpleaños: 1 = enero, 12 = diciembre.
+const birthdayDate = { month: 9, day: 1
+    };
+
+function getTodayData() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const celebration = celebrations.find(item => item.month === month && item.day === day);
+
+    if (celebration) return celebration;
+    if (birthdayDate.month === month && birthdayDate.day === day) return birthdayData;
+    return defaultData;
+}
 
 function wrapChars(text) {
     return [...text].map((char, index) => {
@@ -117,11 +172,13 @@ function wrapChars(text) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const titleElement = document.getElementById('birthdayTitle');
+    const currentData = getTodayData();
+
     if (titleElement) {
         titleElement.innerHTML = `
-            <span class="title-line">${wrapChars(birthdayData.title)}</span>
+            <span class="title-line">${wrapChars(currentData.title)}</span>
             <br>
-            <span class="subtitle-line">${wrapChars(birthdayData.subtitle)}</span>
+            <span class="subtitle-line">${wrapChars(currentData.subtitle)}</span>
         `;
     }
 });
